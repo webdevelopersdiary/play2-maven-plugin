@@ -58,6 +58,14 @@ public abstract class AbstractPlay2ServerMojo
      */
     @Parameter( property = "play2.serverJvmArgs", defaultValue = "" )
     private String serverJvmArgs;
+    
+    /**
+     * Alternative NettyServer main class.
+     * 
+     * @since 1.0.0
+     */
+    @Parameter( property = "play2.nettyServerMainClass", defaultValue = "play.core.server.NettyServer" )
+    protected String nettyServerMainClass;
 
     protected Java prepareAntJavaTask( boolean fork )
         throws MojoExecutionException
@@ -70,7 +78,7 @@ public abstract class AbstractPlay2ServerMojo
         Java javaTask = new Java();
         javaTask.setTaskName( "play" );
         javaTask.setProject( antProject );
-        javaTask.setClassname( "play.core.server.NettyServer" );
+        javaTask.setClassname( nettyServerMainClass );
         javaTask.setClasspath( classPath );
         javaTask.setFork( fork );
         if ( fork )
